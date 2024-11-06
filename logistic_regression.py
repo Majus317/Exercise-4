@@ -7,26 +7,40 @@ Implement the logistic function and binary cross-entropy loss function, using ti
 import numpy as np
 import pandas as pd
 import seaborn as sns
-
+import matplotlib.pyplot as plt
 
 def logistic_function(x, a=0, b=0):
-    pass
+    lg = 1 / (1 + np.exp(-(a * x + b)))
+    return lg
 
 
 # binary cross-entropy loss
 def bcel(y, y_hat):
-    pass
+    bceloss = -(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))
+    return bceloss
 
 
 def read_data(path):
-    pass
+    dataframe = pd.read_csv(path)
+    return dataframe
 
 
 def plot(dataframe):
-    pass
+    plt.subplot(2,1,1)
+    sns.scatterplot(data=dataframe, x = "Age", y = "Survived")
+    plt.xlabel("Age")
+    plt.ylabel("Did they suirvive?")
+    plt.title("Age/Survived")
+    
+    plt.subplot(2,1,2)
+    sns.scatterplot(data=dataframe, x="Pclass",y="Survived")
+    plt.title("PassengerClass/Survived")
+    
+    plt.show()
 
 
 def loss(dataframe):
     pass
 
-print("testloooool")
+file = read_data("titanic.csv")
+plot(file)
