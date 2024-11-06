@@ -10,12 +10,12 @@ import seaborn as sns
 
 
 def logistic_function(x, a, b):
-    return 1.0 / (1 + np.exp(-(a*x+b)))
+    return 1.0 / (1 + np.exp(-(a * x + b)))
 
 
 # binary cross-entropy loss
 def bcel(y, y_hat):
-    return (-1/y.size)*np.sum(y*np.log(y_hat)+(1-y)*np.log(1-y_hat))
+    return (-1 / y.size) * np.sum(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))
 
 
 def read_data(path):
@@ -29,13 +29,12 @@ def plot(dataframe):
     col_y = dataframe.columns[1]
     col_y_val = dataframe[col_y].to_numpy(dtype=float)
 
-    logis_f = logistic_function(col_x_val, -2, 0)
-    print(col_x_val.size)
-    #bce_f = bcel(col_y_val, logis_f)
-    #sns.scatterplot(x=col_x, y=col_y, data=dataframe)
-    #sns.lineplot(x=col_x, y=logis_f, color='green', data=dataframe)
-    #sns.lineplot(x=col_x, y=bce_f, color='red', data=dataframe)
-    #plt.show()
+    logis_f = logistic_function(col_x_val, 0.001, -0.7)
+    bce_f = bcel(col_y_val, logis_f)
+    sns.scatterplot(x=col_x, y=col_y, data=dataframe)
+    sns.lineplot(x=col_x, y=logis_f, color='green', data=dataframe)
+    sns.lineplot(x=col_x, y=bce_f, color='red', data=dataframe)
+    plt.show()
 
 
 def loss(dataframe):
@@ -43,12 +42,17 @@ def loss(dataframe):
     col_x_val = dataframe[col_x].to_numpy(dtype=float)
     col_y = dataframe.columns[1]
     col_y_val = dataframe[col_y].to_numpy(dtype=float)
-    logis_f = logistic_function(col_x_val, -2, 0)
+
+    logis_f = logistic_function(col_x_val, 0.001, -0.7)
+    print(bcel(col_y_val, logis_f))
 
 
-#print(bcel(0, logistic_function(0.1734, 0.5, -2)))
+# Calling the functions
 titanic_df = read_data("titanic.csv")
-df_age = titanic_df[["Age", "Survived"]]
+df_age = titanic_df.dropna(subset=['Age'])
+df_age = df_age[["Age", "Survived"]]
 df_class = titanic_df[["Pclass", "Survived"]]
-#plot(df_age)
-#plot(df_class)
+
+loss(df_age)
+plot(df_age)
+plot(df_class)
