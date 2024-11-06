@@ -28,3 +28,5 @@ def plot(dataframe):
 
 def loss(dataframe):
     pass
+
+print("testloooool")
