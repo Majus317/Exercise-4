@@ -30,6 +30,9 @@ def plot(dataframe):
     plt.ylabel("Did they suirvive?")
     plt.title("Age/Survived")
     
+    x = dataframe["Age"]
+    sns.lineplot(x = x, y = logistic_function(x, a, b), color = "red")
+
     plt.subplot(2,1,2)
     sns.scatterplot(data=dataframe, x="Pclass",y="Survived")
     plt.title("PassengerClass/Survived")
