@@ -44,3 +44,8 @@ def loss(dataframe, a, b):
 
 file = read_data("titanic.csv")
 plot(file)
+
+a = 0.03
+b = 0.5
+
+print(loss(file, a, b))
